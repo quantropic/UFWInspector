@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CozyGuard
+Comment=UFW log analyzer for security monitoring
+Exec=cozyguard analyze
+Terminal=true
+Type=Application
+Categories=Utility;Security;
+Keywords=security;firewall;logs;ufw;

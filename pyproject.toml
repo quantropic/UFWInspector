@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ufwinspector"
+version = "0.1.0"
+description = "UFW log analyzer for security monitoring"
+readme = "README.md"
+authors = [
+    {name = "UFWInspector Team", email = "ufwinspector-info@quantropic.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "rich>=12.0.0",
+    "dnspython>=2.2.0",
+    "ipaddress>=1.0.23",
+    "typer>=0.7.0",
+    "tabulate>=0.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "mypy>=0.991",
+    "black>=22.10.0",
+    "isort>=5.10.1",
+    "flake8>=6.0.0",
+]
+
+[project.scripts]
+ufwinspector = "ufwinspector.cli:main"
+
+[tool.setuptools]
+packages = ["ufwinspector", "ufwinspector.core", "ufwinspector.ui"]
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true

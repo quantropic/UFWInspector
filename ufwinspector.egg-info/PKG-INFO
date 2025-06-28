@@ -1,0 +1,79 @@
+Metadata-Version: 2.4
+Name: ufwinspector
+Version: 0.1.0
+Summary: UFW log analyzer for security monitoring
+Author-email: UFWInspector Team <ufwinspector-info@quantropic.com>
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX :: Linux
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: rich>=12.0.0
+Requires-Dist: dnspython>=2.2.0
+Requires-Dist: ipaddress>=1.0.23
+Requires-Dist: typer>=0.7.0
+Requires-Dist: tabulate>=0.9.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: mypy>=0.991; extra == "dev"
+Requires-Dist: black>=22.10.0; extra == "dev"
+Requires-Dist: isort>=5.10.1; extra == "dev"
+Requires-Dist: flake8>=6.0.0; extra == "dev"
+
+# UFWInspector
+
+A UFW log analyzer for security monitoring.
+
+## Features
+
+- Analyzes UFW logs from `/var/log/ufw.log`
+- Groups events by type (UFW_BLOCK, UFW_AUDIT, etc.)
+- Deduplicates entries by IP address
+- Resolves domain names for IP addresses
+- Identifies whether public addresses are source or destination
+- Presents results in a sorted table by number of occurrences
+
+## Installation
+
+### From Package (Ubuntu)
+
+```bash
+sudo apt install ./ufwinspector_0.1.0_all.deb
+```
+
+### From Source
+
+```bash
+pip install .
+```
+
+## Usage
+
+```bash
+# Analyze UFW logs
+ufwinspector analyze
+
+# Show help
+ufwinspector --help
+```
+
+## Development
+
+```bash
+# Install development dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Check code quality
+mypy ufwinspector
+black ufwinspector
+isort ufwinspector
+flake8 ufwinspector
+```
+
+## License
+
+MIT
