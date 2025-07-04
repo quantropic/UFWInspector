@@ -105,7 +105,43 @@ class ConsoleUI:
                 ", ".join(summary.protocols) if summary.protocols else "N/A"
             ])
         
-        print(tabulate(table_data, headers=headers, tablefmt="grid"))
+
+
+    def display_tsv(self, ip_summaries: List[IPSummary]) -> None:
+        """Display results as tab-separated values."""
+        if not ip_summaries:
+            print("No public IP addresses found in the logs.")
+            return
+
+        # Print header
+        headers = ["IP_Address", "Domain_Name", "ISP", "Direction", "In_Count", "Out_Count", "Event_Types", "Protocols"]
+        print("\t".join(headers))
+        
+        # Print data rows
+        for summary in ip_summaries:
+            source_events = [et.name for et in summary.source_event_types]
+            dest_events = [et.name for et in summary.destination_event_types]
+            
+            if summary.direction_type == "Incoming":
+                event_types = f"IN:{','.join(source_events)}"
+            elif summary.direction_type == "Outgoing":
+                event_types = f"OUT:{','.join(dest_events)}"
+            else:
+                event_types = f"IN:{','.join(source_events)},OUT:{','.join(dest_events)}"
+            
+            isp_info = summary.isp if summary.domain_name == summary.ip_address else "-"
+            
+            row = [
+                summary.ip_address,
+                summary.domain_name,
+                isp_info,
+                summary.direction_type,
+                str(summary.source_count) if summary.source_count > 0 else "0",
+                str(summary.destination_count) if summary.destination_count > 0 else "0",
+                event_types,
+                ",".join(summary.protocols) if summary.protocols else "N/A"
+            ]
+            print("\t".join(row))
 
     def display_event_type_summary(self, ip_summaries: List[IPSummary]) -> None:
         """Display a summary grouped by event type."""

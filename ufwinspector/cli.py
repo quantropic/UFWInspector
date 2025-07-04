@@ -82,11 +82,10 @@ def analyze(
         "-f", 
         help="Path to the UFW log file (overrides config)"
     ),
-    plain: bool = typer.Option(
-        False, 
-        "--plain", 
-        "-p", 
-        help="Use plain text output instead of rich formatting"
+    format_type: str = typer.Option(
+        "table",
+        "--format",
+        help="Output format: table, plain, or tsv"
     ),
     group_by_type: bool = typer.Option(
         False, 
@@ -163,7 +162,9 @@ def analyze(
     
     if group_by_type:
         ui.display_event_type_summary(ip_summaries)
-    elif plain:
+    elif format_type == "tsv":
+        ui.display_tsv(ip_summaries)
+    elif format_type == "plain":
         ui.display_plain_table(ip_summaries)
     else:
         ui.display_summary(ip_summaries)
